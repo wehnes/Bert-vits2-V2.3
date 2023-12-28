@@ -214,7 +214,7 @@ def process_auto(text):
         if slice == "":
             continue
         temp_text, temp_lang = [], []
-        sentences_list = split_by_language(slice, target_languages=["zh", "ja", "en"])
+        sentences_list = split_by_language(slice, target_languages=["zh", "jp", "en"])
         for sentence, lang in sentences_list:
             if sentence == "":
                 continue
