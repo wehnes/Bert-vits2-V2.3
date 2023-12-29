@@ -724,7 +724,7 @@ def train_and_evaluate(
                     )
                 if os.path.exists("/content/drive/MyDrive/"):
                     # 步长为500倍数时保存一下
-                    if global_step % 250 == 0:
+                    if global_step % 250 == 0 and global_step > 0:
                         utils.save_checkpoint(
                             net_g,
                             optim_g,
