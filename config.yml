@@ -108,7 +108,7 @@ webui:
   # 端口号
   port: 7860
   # 是否公开部署，对外网开放
-  share: false
+  share: true
   # 是否开启debug模式
   debug: false
   # 语种识别库，可选langid, fastlid
