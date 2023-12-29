@@ -736,7 +736,7 @@ def train_and_evaluate(
                         try:
                             os.system('cp -f "/content/Bert-vits2-V2.3/Data/ada/config.json" "/content/drive/MyDrive"')
                             print("config复制成功")
-                        else:
+                        except:
                             print("config复制失败")
                     # utils.save_checkpoint(
                     #     net_d,
