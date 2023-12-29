@@ -723,35 +723,43 @@ def train_and_evaluate(
                         os.path.join(hps.model_dir, "DUR_{}.pth".format(global_step)),
                     )
                 if os.path.exists("/content/drive/MyDrive/"):
-                    utils.save_checkpoint(
-                        net_g,
-                        optim_g,
-                        hps.train.learning_rate,
-                        epoch,
-                        os.path.join("/content/drive/MyDrive/", "G_latest.pth"),
-                    )
-                    utils.save_checkpoint(
-                        net_d,
-                        optim_d,
-                        hps.train.learning_rate,
-                        epoch,
-                        os.path.join("/content/drive/MyDrive/", "D_latest.pth"),
-                    )
-                    utils.save_checkpoint(
-                        net_wd,
-                        optim_wd,
-                        hps.train.learning_rate,
-                        epoch,
-                        os.path.join("/content/drive/MyDrive/", "WD_latest.pth"),
-                    )
-                    if net_dur_disc is not None:
+                    # 步长为500倍数时保存一下
+                    if global_step % 250 == 0:
                         utils.save_checkpoint(
-                            net_dur_disc,
-                            optim_dur_disc,
+                            net_g,
+                            optim_g,
                             hps.train.learning_rate,
                             epoch,
-                            os.path.join("/content/drive/MyDrive/", "DUR_latest.pth"),
+                            os.path.join("/content/drive/MyDrive/", "G_{}.pth".format(global_step)),
                         )
+                        # 写的绝对路径
+                        try:
+                            os.system('cp -f "/content/Bert-vits2-V2.3/Data/ada/config.json" "/content/drive/MyDrive"')
+                            print("config复制成功")
+                        else:
+                            print("config复制失败")
+                    # utils.save_checkpoint(
+                    #     net_d,
+                    #     optim_d,
+                    #     hps.train.learning_rate,
+                    #     epoch,
+                    #     os.path.join("/content/drive/MyDrive/", "D_latest.pth"),
+                    # )
+                    # utils.save_checkpoint(
+                    #     net_wd,
+                    #     optim_wd,
+                    #     hps.train.learning_rate,
+                    #     epoch,
+                    #     os.path.join("/content/drive/MyDrive/", "WD_latest.pth"),
+                    # )
+                    # if net_dur_disc is not None:
+                    #     utils.save_checkpoint(
+                    #         net_dur_disc,
+                    #         optim_dur_disc,
+                    #         hps.train.learning_rate,
+                    #         epoch,
+                    #         os.path.join("/content/drive/MyDrive/", "DUR_latest.pth"),
+                    #     )
                 keep_ckpts = config.train_ms_config.keep_ckpts
                 if keep_ckpts > 0:
                     utils.clean_checkpoints(
