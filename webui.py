@@ -214,11 +214,13 @@ def process_auto(text):
         if slice == "":
             continue
         temp_text, temp_lang = [], []
-        sentences_list = split_by_language(slice, target_languages=["zh", "jp", "en"])
+        sentences_list = split_by_language(slice, target_languages=["zh", "ja", "en"])
         for sentence, lang in sentences_list:
             if sentence == "":
                 continue
             temp_text.append(sentence)
+            if lang == "ja":
+                lang = "jp"
             temp_lang.append(lang.upper())
         _text.append(temp_text)
         _lang.append(temp_lang)
@@ -549,4 +551,4 @@ if __name__ == "__main__":
 
     print("推理页面已开启!")
     webbrowser.open(f"http://127.0.0.1:{config.webui_config.port}")
-    app.launch(share=True, server_port=config.webui_config.port)
+    app.launch(share=config.webui_config.share, server_port=config.webui_config.port)
