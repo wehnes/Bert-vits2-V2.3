@@ -44,7 +44,7 @@ def resample(data_dir):
     in_dir = os.path.join(start_path, "raw")
     out_dir = os.path.join(start_path, "wavs")
     subprocess.run(
-        f".\\venv\\python.exe resample_legacy.py "
+        f"python resample_legacy.py "
         f"--sr 44100 "
         f"--in_dir {in_dir} "
         f"--out_dir {out_dir} ",
@@ -57,19 +57,15 @@ def preprocess_text(data_dir):
     assert data_dir != "", "数据集名称不能为空"
     start_path, lbl_path, train_path, val_path, config_path = get_path(data_dir)
     lines = open(lbl_path, "r", encoding="utf-8").readlines()
-
-    print(lbl_path)
-
     with open(lbl_path, "w", encoding="utf-8") as f:
         for line in lines:
-            print(line)
             path, spk, language, text = line.strip().split("|")
             path = os.path.join(start_path, "wavs", os.path.basename(path)).replace(
                 "\\", "/"
             )
             f.writelines(f"{path}|{spk}|{language}|{text}\n")
     subprocess.run(
-        f".\\venv\\python.exe preprocess_text.py "
+        f"python preprocess_text.py "
         f"--transcription-path {lbl_path} "
         f"--train-path {train_path} "
         f"--val-path {val_path} "
@@ -83,7 +79,7 @@ def bert_gen(data_dir):
     assert data_dir != "", "数据集名称不能为空"
     _, _, _, _, config_path = get_path(data_dir)
     subprocess.run(
-        f".\\venv\\python.exe bert_gen.py " f"--config {config_path}",
+        f"python bert_gen.py " f"--config {config_path}",
         shell=True,
     )
     return "BERT 特征文件生成完成"
@@ -96,7 +92,7 @@ if __name__ == "__main__":
                 _ = gr.Markdown(
                     value="# Bert-VITS2 数据预处理\n"
                     "## 预先准备：\n"
-                    "下载 BERT 和 CLAP 模型：\n"
+                    "下载 BERT 和 WavLM 模型：\n"
                     "- [中文 RoBERTa](https://huggingface.co/hfl/chinese-roberta-wwm-ext-large)\n"
                     "- [日文 DeBERTa](https://huggingface.co/ku-nlp/deberta-v2-large-japanese-char-wwm)\n"
                     "- [英文 DeBERTa](https://huggingface.co/microsoft/deberta-v3-large)\n"
